@@ -26,7 +26,7 @@ class Solution {
             columnEnd--;
         }
 
-        if(matrix.length == matrix[0].length && matrix.length%2!=0) {
+        if(matrix.length == matrix[0].length && matrix.length%2 != 0) {
             int mid = matrix.length/2;
             ans.add(matrix[mid][mid]);
         }
