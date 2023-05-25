@@ -1,4 +1,4 @@
-//Matrix Diagonal Sum
+//1572. Matrix Diagonal Sum
 
 class Solution {
     public int diagonalSum(int[][] mat) {

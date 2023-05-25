@@ -1,0 +1,182 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "BST",
+            "request": "launch",
+            "mainClass": "BST",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "BinaryTrees",
+            "request": "launch",
+            "mainClass": "BinaryTrees",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Norm",
+            "request": "launch",
+            "mainClass": "Norm",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "GreedyAlgo",
+            "request": "launch",
+            "mainClass": "GreedyAlgo",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "GreedyB",
+            "request": "launch",
+            "mainClass": "GreedyB",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Greedy",
+            "request": "launch",
+            "mainClass": "Greedy",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "DequeB",
+            "request": "launch",
+            "mainClass": "DequeB",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "StackWithQueues",
+            "request": "launch",
+            "mainClass": "StackWithQueues",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "QueueB",
+            "request": "launch",
+            "mainClass": "QueueB",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Stacks",
+            "request": "launch",
+            "mainClass": "Stacks",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "DoubleLL",
+            "request": "launch",
+            "mainClass": "DoubleLL",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch LinkedList",
+            "request": "launch",
+            "mainClass": "LinkedList",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Arraylists",
+            "request": "launch",
+            "mainClass": "Arraylists",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Leetcode",
+            "request": "launch",
+            "mainClass": "Leetcode",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch ArraysCC",
+            "request": "launch",
+            "mainClass": "ArraysCC",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Backtracking",
+            "request": "launch",
+            "mainClass": "Backtracking",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch BitManipulation",
+            "request": "launch",
+            "mainClass": "BitManipulation",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch DividenConquer",
+            "request": "launch",
+            "mainClass": "DividenConquer",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch JavaBasics",
+            "request": "launch",
+            "mainClass": "JavaBasics",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Matrices",
+            "request": "launch",
+            "mainClass": "Matrices",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch OOPS",
+            "request": "launch",
+            "mainClass": "OOPS",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Patterns",
+            "request": "launch",
+            "mainClass": "Patterns",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Recursion",
+            "request": "launch",
+            "mainClass": "Recursion",
+            "projectName": "Java Programming Language_344401c4"
+        },
+        {
+            "type": "java",
+            "name": "Launch Strings",
+            "request": "launch",
+            "mainClass": "Strings",
+            "projectName": "Java Programming Language_344401c4"
+        }
+    ]
+}
