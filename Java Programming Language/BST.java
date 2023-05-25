@@ -1,4 +1,3 @@
-import java.lang.foreign.VaList;
 import java.util.ArrayList;
 
 public class BST {
@@ -10,6 +9,7 @@ public class BST {
 
         Node(int data) {
             this.data = data;
+            this.left = this.right = null;
         }
     }
 
@@ -37,6 +37,16 @@ public class BST {
         inorder(root.left);
         System.out.print(root.data + " ");
         inorder(root.right);
+    }
+
+    public static void preorder(Node root) {
+        if(root==null) {
+            return;
+        }
+
+        System.out.print(root.data+" ");
+        preorder(root.left);
+        preorder(root.right);
     }
 
     public static boolean searchNode(Node root, int key) {
@@ -160,18 +170,136 @@ public class BST {
         return root;
     }
 
-    public static void main(String[] args) {
-        // int values[] = {5,1,3,4,2,7};
-        int values[] = {8,5,3,1,4,6,10,11,14};
-        // int values[] = {8,8,8};
-        Node root = null;
+    public static Node createBST(int values[], int start, int end) {
+        if(start>end) {
+            return null;
+        }
+        int mid = start+((end-start)/2);
 
-        for(int i=0; i<values.length; i++) {
-            root = insert(root, values[i]);
+        Node root = new Node(values[mid]);
+        root.left = createBST(values, start, mid-1);
+        root.right = createBST(values, mid+1, end);
+
+        return root;
+
+    }
+
+    //Convert BST to Balanced BST
+    public static void getInorder(Node root, ArrayList<Integer> inorder) {
+        if(root==null) {
+            return;
         }
 
-        inorder(root);
-        System.out.println();
+        getInorder(root.left, inorder);
+        inorder.add(root.data);
+        getInorder(root.right, inorder);
+    }
+
+    public static Node createBSTForBalancedBST(ArrayList<Integer> inorder, int start, int end) {
+        if(start>end) {
+            return null;
+        }
+        int mid=(start+end)/2;
+
+        Node root = new Node(inorder.get(mid));
+        root.left = createBSTForBalancedBST(inorder, start, mid-1);
+        root.right = createBSTForBalancedBST(inorder, mid+1, end);
+        return root;
+    }
+
+    public static Node balancedBST(Node root) {
+        //inorder sequence
+        ArrayList<Integer> inorder = new ArrayList<>();
+        getInorder(root, inorder);
+
+        //inorder -> Balanced BST
+        root = createBSTForBalancedBST(inorder, 0, inorder.size()-1);
+        return root;
+    }
+
+    static class Info {
+        boolean isBST;
+        int size;
+        int min;
+        int max;
+        public Info(boolean isBST, int size, int min, int max) {
+            this.isBST = isBST;
+            this.size = size;
+            this.min = min;
+            this.max = max;
+        }
+    }
+    
+    public static int maxBST = 0;
+    public static Info largestBST(Node root) {
+        if(root==null) {
+            return new Info(true,0,Integer.MAX_VALUE,Integer.MIN_VALUE);
+        }
+
+        Info leftInfo = largestBST(root.left);
+        Info rightInfo = largestBST(root.right);
+        int size = leftInfo.size + rightInfo.size + 1;
+        int min = Math.min(root.data, Math.min(leftInfo.min, rightInfo.min));
+        int max = Math.max(root.data, Math.max(leftInfo.max, rightInfo.max));
+
+        if(root.data <= leftInfo.max || root.data >= rightInfo.min) {
+            return new Info(false,size,min,max);
+        }
+
+        if(leftInfo.isBST && rightInfo.isBST) {
+            maxBST = Math.max(maxBST, size);
+            return new Info(true,size,min,max);
+        }
+
+        return new Info(false,size,min,max);
+    }
+
+    public static Node mergeBSTs(Node root1, Node root2) {
+        ArrayList<Integer> arr1 = new ArrayList<>();
+        getInorder(root1, arr1);
+        ArrayList<Integer> arr2 = new ArrayList<>();
+        getInorder(root2, arr2);
+
+        ArrayList<Integer> sortedArr = new ArrayList<>();
+
+        int pt1 = 0, pt2 = 0;
+        while(pt1 < arr1.size() && pt2 < arr2.size()) {
+            if(arr1.get(pt1) < arr2.get(pt2)) {
+                sortedArr.add(arr1.get(pt1));
+                pt1++;
+            }
+            else {
+                sortedArr.add(arr2.get(pt2));
+                pt2++;
+            }
+        }
+
+        while(pt1 < arr1.size()) {
+            sortedArr.add(arr1.get(pt1));
+            pt1++;
+        }
+
+        while(pt2 < arr2.size()) {
+            sortedArr.add(arr2.get(pt2));
+            pt2++;
+        }
+
+        Node root = createBSTForBalancedBST(sortedArr, 0, sortedArr.size()-1);
+        return root;
+    }
+
+    public static void main(String[] args) {
+        // int values[] = {5,1,3,4,2,7};
+        // int values[] = {8,5,3,1,4,6,10,11,14};
+        // int values[] = {8,8,8};
+        // Node root = null;
+
+        // for(int i=0; i<values.length; i++) {
+        //     root = insert(root, values[i]);
+        // }
+        
+        // inorder(root);
+        // System.out.println();
         
         // System.out.println(searchNode(root,22));
         
@@ -184,8 +312,59 @@ public class BST {
         
         // System.out.println(validBST(root, null, null));
         
-        root = mirrorBST(root);
-        inorder(root);
-        System.out.println();
+        // root = mirrorBST(root);
+        // inorder(root);
+        // System.out.println();
+        
+        // int values[] = {3,5,6,8,10,11,12};
+        // Node root = createBST(values, 0, values.length-1);
+        
+        // inorder(root);
+        // System.out.println();
+        // preorder(root);
+        
+        // // Convert BST to Balanced BST
+        // Node root = new Node(8);
+        // root.left = new Node(6);
+        // root.left.left = new Node(5);
+        // root.left.left.left = new Node(3);
+        // root.right = new Node(10);
+        // root.right.right = new Node(11);
+        // root.right.right.right = new Node(12);
+        
+        // preorder(root);
+        // System.out.println();
+        // // OR
+        // int values[] = {8,6,5,3,10,11,12};
+        // Node root=null;
+        // for(int i=0; i<values.length; i++) {
+        //     root = insert(root, values[i]);
+        // }
+
+        // root = balancedBST(root);
+        // preorder(root);
+
+        // Node root = new Node(50);
+        // root.left = new Node(30);
+        // root.left.left = new Node(5);
+        // root.left.right = new Node(20);
+        // root.right = new Node(60);
+        // root.right.left = new Node(45);
+        // root.right.right = new Node(70);
+        // root.right.right.left = new Node(65);
+        // root.right.right.right = new Node(85);
+        // largestBST(root);
+        // System.out.println(maxBST);
+
+        Node root1 = new Node(2);
+        root1.left = new Node(1);
+        root1.right = new Node(4);
+
+        Node root2 = new Node(9);
+        root2.left = new Node(3);
+        root2.right = new Node(12);
+
+        Node root = mergeBSTs(root1,root2);
+        preorder(root);
     }
 }
