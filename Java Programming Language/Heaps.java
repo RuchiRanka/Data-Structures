@@ -24,6 +24,49 @@ public class Heaps {
         public int peek() {
             return arr.get(0);
         }
+
+        private void heapify(int i) {
+            int left = 2*i + 1;
+            int right = 2*i + 2;
+            int minIdx = i;
+            
+            if(left<arr.size() && arr.get(left) < arr.get(minIdx)) {
+                minIdx = left;
+            }
+
+            if(right<arr.size() && arr.get(right) < arr.get(minIdx)) {
+                minIdx = right;
+            }
+
+            if(minIdx != i) {
+                //swap
+                int temp = arr.get(i);
+                arr.set(i,arr.get(minIdx));
+                arr.set(minIdx,temp);
+                
+                heapify(minIdx);
+            }
+        }
+
+        public int remove() {
+            int data = arr.get(0);
+
+            //step 1 - swap first and last node
+            int temp = arr.get(0);
+            arr.set(0,arr.get(arr.size()-1));
+            arr.set(arr.size()-1,temp);
+
+            //step 2 - delete last node
+            arr.remove(arr.size()-1);
+
+            //step 3 - heapify fn
+            heapify(0);
+            return data;
+        }
+
+        public boolean isEmpty() {
+            return arr.size()==0;
+        }
     }
 
     public static void main(String[] args) {
@@ -35,10 +78,9 @@ public class Heaps {
         hp.add(10);
         hp.add(1);
 
-        for(int i=0; i<hp.arr.size(); i++) {
-            System.out.println(hp.arr.get(i));
+        while(!hp.isEmpty()) {
+            System.out.println(hp.peek());
+            hp.remove();
         }
-        System.out.println();
-        System.out.println(hp.peek());
     }
 }
