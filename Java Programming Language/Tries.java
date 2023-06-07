@@ -21,7 +21,7 @@ public class Tries {
                 curr.children[ch-'a'] = new Node();
             }
             else {
-                curr.freq++;
+                curr.children[ch-'a'].freq++;
             }
             curr = curr.children[ch-'a'];
         }
@@ -52,8 +52,66 @@ public class Tries {
         return false;
     }
 
-    public static void prefix(String ans[]) {
+    public static void prefix(String arr[], String ans[]) {
+        for(int i=0; i<arr.length; i++) {
+            Node curr = root;
+            ans[i]="";
+            for(int j=0; j<arr[i].length(); j++) {
+                int idx = arr[i].charAt(j) - 'a';
+                ans[i] += arr[i].charAt(j);
+                if(curr.children[idx].freq == 1) {
+                    break;
+                }
+                curr = curr.children[idx];
+            }
+        }
+    }
 
+    public static void getPrefix(Node root, String ans) {
+        if(root==null) {
+            return;
+        }
+
+        if(root.freq == 1) {
+            System.out.println(ans);
+            return;
+        }
+
+        for(int i=0; i<root.children.length; i++) {
+            if(root.children[i] != null) {
+                getPrefix(root.children[i], ans+(char)(i+'a'));
+            }
+        }
+    }
+
+    public static boolean startsWith(String prefix) {
+        Node curr = root;
+        for(int i=0; i<prefix.length(); i++) {
+            int idx = prefix.charAt(i)-'a';
+            if(curr.children[idx]==null) {
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+        return true;
+    }
+
+    public static int countNodes(Node root, int count) {
+        for(int i=0; i<root.children.length; i++) {
+            if(root.children[i] != null) {
+                count = countNodes(root.children[i], count+1);
+            }
+        }
+        return count;
+    }
+
+    public static int uniqueSubstr(String str) {
+        for(int i=0; i<str.length(); i++) {
+            String substr = str.substring(i, str.length());
+            insert(substr);
+        }
+        
+        return countNodes(root, 0)+1;
     }
 
     public static void main(String[] args) {
@@ -72,12 +130,27 @@ public class Tries {
         // String key = "icelikesamsung";
         // System.out.println(wordBreak(key));
 
-        String arr[] = {"zebra","dog","duck","dove"};
-        for(int i=0; i<arr.length; i++) {
-            insert(arr[i]);
-        }
-        String ans[] = new String[arr.length];
-        prefix(ans);
+        // String arr[] = {"zebra","dog","duck","dove"};
+        // for(int i=0; i<arr.length; i++) {
+        //     insert(arr[i]);
+        // }
+        // String ans[] = new String[arr.length];
+        // prefix(arr, ans);
+        // for(int i=0; i<ans.length; i++) {
+        //     System.out.println(ans[i]);
+        // }
 
+        // root.freq = -1;
+        // getPrefix(root, "");
+
+        // String words[] = {"apple","app","mango","man","woman"};
+        // for(int i=0; i<words.length; i++) {
+        //     insert(words[i]);
+        // }
+        // String prefix = "app";
+        // System.out.println(startsWith(prefix));
+
+        String str = "apple";
+        System.out.println(uniqueSubstr(str));
     }
 }
