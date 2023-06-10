@@ -114,6 +114,19 @@ public class Tries {
         return countNodes(root, 0)+1;
     }
 
+    static String longestString = "";
+    public static String longestPrefix(Node root, String str) {
+        if(longestString.length() < str.length()) {
+            longestString = str;
+        }
+        for(int i=0; i<root.children.length; i++) {
+            if(root.children[i] != null && root.children[i].eow == true) {
+                longestPrefix(root.children[i], str+(char)(i+'a'));                
+            }
+        }
+        return longestString;
+    }
+
     public static void main(String[] args) {
         // String words[] = {"the","a","there","any","their","thee"};
         // for(int i=0; i<words.length; i++) {
@@ -150,7 +163,13 @@ public class Tries {
         // String prefix = "app";
         // System.out.println(startsWith(prefix));
 
-        String str = "apple";
-        System.out.println(uniqueSubstr(str));
+        // String str = "apple";
+        // System.out.println(uniqueSubstr(str));
+
+        String words[] = {"a","banana","app","appl","ap","apply","apple"};
+        for(int i=0; i<words.length; i++) {
+            insert(words[i]);
+        }
+        System.out.println(longestPrefix(root,""));
     }
 }

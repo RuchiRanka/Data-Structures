@@ -192,10 +192,13 @@ public class GreedyAlgo {
         // System.out.println(activitySelection(start, end));
         // System.out.println(activitySelectionUnsorted(start, end));
 
+        int value[] = {2,3,1,4};
+        int weight[] = {3,4,6,5};
+        int W = 8;
         // int value[] = {60,100,120};
         // int weight[] = {10,20,30};
         // int W = 50;
-        // System.out.println(fractionalKnapsack(value, weight, W));
+        System.out.println(fractionalKnapsack(value, weight, W));
 
         // int arr1[] = {4,1,8,7};
         // int arr2[] = {2,3,6,5};
@@ -210,9 +213,9 @@ public class GreedyAlgo {
         // int jobInfo[][] = {{4,20},{1,10},{1,40},{1,30}};
         // System.out.println(jobSequencing(jobInfo));
 
-        int n=4, m=6;
-        Integer costVer[] = {2,1,3,1,4}; //m-1
-        Integer costHor[] = {4,1,2}; //n-1
-        System.out.println(chocolaProblem(costVer, costHor));
+        // int n=4, m=6;
+        // Integer costVer[] = {2,1,3,1,4}; //m-1
+        // Integer costHor[] = {4,1,2}; //n-1
+        // System.out.println(chocolaProblem(costVer, costHor));
     }
 }
