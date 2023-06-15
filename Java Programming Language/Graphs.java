@@ -372,6 +372,111 @@ public class Graphs {
         return mst;
     }
 
+    // public static int minCost = Integer.MAX_VALUE;
+    // public static int cheapestFlight(ArrayList<Edge>[] graph, int src, int dest, int k, int cost) {
+    //     if(src==dest && k>=0) {
+    //         return cost;
+    //     } 
+    //     else if(k<0) {
+    //         return minCost;
+    //     }
+    //     for(int i=0; i<graph[src].size(); i++) {
+    //         Edge e = graph[src].get(i);
+    //         minCost = Math.min(minCost, cheapestFlight(graph, e.dest, dest, k-1, cost+e.wt));
+    //     }
+    //     return minCost;
+    // }
+
+    static class Info {
+        int v;
+        int cost;
+        int stops;
+        public Info(int v, int cost, int stops) {
+            this.v = v;
+            this.cost = cost;
+            this.stops = stops;
+        }
+    }
+
+    public static int cheapestFlight(ArrayList<Edge>[] graph, int src, int dest, int k) {
+        int dist[] = new int[graph.length];
+        for(int i=0; i<dist.length; i++) {
+            if(i!=src) {
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+        Queue<Info> q = new LinkedList<>();
+        q.add(new Info(src,0,0));
+
+        while(!q.isEmpty()) {
+            Info curr = q.remove();
+            if(curr.stops>k) {
+                break;
+            }
+            if(curr.stops<=k) {
+                for(int i=0; i<graph[curr.v].size(); i++) {
+                    Edge e = graph[curr.v].get(i);
+                    q.add(new Info(e.dest, curr.cost+e.wt, curr.stops+1));
+                    if(dist[e.dest] > curr.cost+e.wt) {
+                        dist[e.dest] = curr.cost+e.wt;
+                    }
+                }
+            }
+        }
+
+        return dist[dest]==Integer.MAX_VALUE ? -1 : dist[dest];
+    }
+
+    public static int connectCities(ArrayList<Edge>[] graph) {
+        boolean vis[] = new boolean[graph.length];
+        PriorityQueue<Pair1> pq = new PriorityQueue<>();
+        pq.add(new Pair1(0,0));
+        int finalCost = 0;
+
+        while(!pq.isEmpty()) {
+            Pair1 curr = pq.remove();
+            if(!vis[curr.n]) {
+                vis[curr.n] = true;
+                finalCost += curr.cost;
+
+                for(int i=0; i<graph[curr.n].size(); i++) {
+                    Edge e = graph[curr.n].get(i);
+                    pq.add(new Pair1(e.dest, e.wt));
+                }
+            }
+        }
+
+        return finalCost;
+    }
+
+    public static void createGraph3(int cities[][], ArrayList<Edge>[] graph) {
+        for(int i=0; i<graph.length; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        for(int i=0; i<cities.length; i++) {
+            for(int j=0; j<cities.length; j++) {
+                if(cities[i][j] != 0) {
+                    graph[i].add(new Edge(i,j,cities[i][j]));
+                }
+            }
+        }
+    }
+
+    public static void createGraph2(int flights[][], ArrayList<Edge>[] graph) {
+        for(int i=0; i<graph.length; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        
+        for(int i=0; i<flights.length; i++) {
+            int src = flights[i][0];
+            int dest = flights[i][1];
+            int wt = flights[i][2];
+
+            graph[src].add(new Edge(src, dest, wt));
+        }
+    }
+
     public static void createGraph(ArrayList<Edge>[] graph) {
         for(int i=0; i<graph.length; i++) {
             graph[i] = new ArrayList<>();
@@ -568,9 +673,28 @@ public class Graphs {
         // createGraph(graph);
         // bellmanFord(graph, 0);
         
-        int V = 4;
-        ArrayList<Edge>[] graph = new ArrayList[V];
-        createGraph(graph);
-        System.out.println(prims(graph));
+        // int V = 4;
+        // ArrayList<Edge>[] graph = new ArrayList[V];
+        // createGraph(graph);
+        // System.out.println(prims(graph));
+
+        // int flights[][] = {{0,1,100},{1,2,100},{0,2,500}};
+        // int flights[][] = {{0,1,100},{1,3,100},{3,2,100},{0,2,500}};
+        // int flights[][] = {{0,1,100},{1,3,100},{3,2,100},{0,3,500}};
+
+        // int flights[][] = {{0,1,100},{1,2,100},{2,0,100},{1,3,600},{2,3,200}};
+        // int n = 4;
+        // int src = 0;
+        // int dest = 2;
+        // int k = 0;
+        // ArrayList<Edge>[] graph = new ArrayList[n];
+        // createGraph2(flights, graph);
+        // // System.out.println(cheapestFlight(graph, src, dest, k+1, 0));
+        // System.out.println(cheapestFlight(graph, src, dest, k));
+
+        int cities[][] = {{0,1,2,3,4},{1,0,5,0,7},{2,5,0,6,0},{3,0,6,0,0},{4,7,0,0,0}};
+        ArrayList<Edge>[] graph = new ArrayList[cities.length];
+        createGraph3(cities, graph);
+        System.out.println(connectCities(graph));
     }
 }
