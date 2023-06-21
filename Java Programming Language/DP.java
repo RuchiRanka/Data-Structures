@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.plaf.basic.BasicDesktopIconUI.MouseInputHandler;
+
 public class DP {
     public static int fib(int n, int dp[]) { //Fibonacci - Memoization
         if(n==0 || n==1) {
@@ -67,19 +69,144 @@ public class DP {
         return dp[n];
     }
 
+    // public static int knapsack1(int val[], int wt[], int W, int curr, int profit, int maxProfit) {
+    //     if(curr>=val.length || W-wt[curr]<0) {
+    //         if(maxProfit < profit) {
+    //             maxProfit = profit;
+    //         }
+    //         return maxProfit;
+    //     }
+
+    //     maxProfit = Math.max(knapsack1(val, wt, W-wt[curr], curr+1, profit+val[curr], maxProfit), knapsack1(val, wt, W, curr+1, profit, maxProfit));
+    //     return maxProfit;
+    // }
+
+    public static int knapsack(int val[], int wt[], int W, int n, int dp[][]) {
+        if(W==0 || n==0) {
+            return 0;
+        }
+
+        if(dp[n][W] != -1) {
+            return dp[n][W];
+        }
+
+        if(wt[n-1] <= W) {
+            //include
+            int ans1 = val[n-1] + knapsack(val, wt, W-wt[n-1], n-1, dp);
+            //exclude
+            int ans2 = knapsack(val, wt, W, n-1, dp);
+            dp[n][W] = Math.max(ans1, ans2);
+            return dp[n][W];
+        }
+        else {
+            //exclude
+            dp[n][W] = knapsack(val, wt, W, n-1, dp);
+            return dp[n][W];
+        }
+    }
+
+    public static int knapsackTab(int val[], int wt[], int W) {
+        int dp[][] = new int[val.length+1][W+1];
+
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                int value = val[i-1];
+                int weight = wt[i-1];
+                if(weight<=j) {
+                    int ans1 = value + dp[i-1][j-weight];
+                    int ans2 = dp[i-1][j];
+                    dp[i][j] = Math.max(ans1, ans2);
+                }
+                else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        return dp[val.length][W];
+    }
+
+    public static boolean subsetSum(int nums[], int target) {
+        boolean dp[][] = new boolean[nums.length+1][target+1];
+
+        for(int i=0; i<dp.length; i++) {
+            dp[i][0] = true;
+        }
+        // // This is already done by default
+        // for(int i=1; i<dp[0].length; i++) {
+        //     dp[0][i] = false;
+        // }
+
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                int w = nums[i-1];
+                if(w <= j) {
+                    dp[i][j] = dp[i-1][j-w] || dp[i-1][j];
+                }
+                else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        return dp[nums.length][target];
+    }
+
+    public static int unboundedKnapsack(int val[], int wt[], int W) {
+        int n = val.length;
+        int dp[][] = new int[n+1][W+1];
+
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                if(wt[i-1]<=j) {
+                    int ans1 = val[i-1] + dp[i-1][j-wt[i-1]];
+                    int ans2 = dp[i-1][j];
+                    int ans3 = val[i-1] + dp[i][j-wt[i-1]];
+                    dp[i][j] = Math.max(ans3, Math.max(ans1, ans2));
+                }
+                else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        return dp[n][W];
+    }
+
     public static void main(String[] args) {
         // int n=5;
         // int dp[] = new int[n+1];
         // System.out.println(fib(n, dp));
         // System.out.println(fibTabulation(n));
 
-        int n=5;
+        // int n=5;
         // int dp[] = new int[n];
         // System.out.println(climbingStairs(n, dp));
 
         // int ways[] = new int[n+1];
         // Arrays.fill(ways, -1);
         // System.out.println(climbingStairs1(n, ways));
-        System.out.println(climbingStairsTab(n));
+        // System.out.println(climbingStairsTab(n));
+
+        int val[] = {15,14,10,45,30};
+        int wt[] = {2,5,1,3,4};
+        int W = 7;
+        // System.out.println(knapsack1(val, wt, W, 0, 0, 0));
+
+        // int dp[][] = new int[val.length+1][W+1];
+        // for(int i=0; i<dp.length; i++) {
+        //     for(int j=0; j<dp[0].length; j++) {
+        //         dp[i][j] = -1;
+        //     }
+        // }
+        // System.out.println(knapsack(val, wt, W, val.length, dp));
+
+        // System.out.println(knapsackTab(val, wt, W));
+
+        // int nums[] = {4,2,7,1,3};
+        // int target = 10;
+        // System.out.println(subsetSum(nums, target));
+
+        System.out.println(unboundedKnapsack(val, wt, W));
     }
 }
