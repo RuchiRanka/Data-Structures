@@ -159,10 +159,10 @@ public class DP {
         for(int i=1; i<dp.length; i++) {
             for(int j=1; j<dp[0].length; j++) {
                 if(wt[i-1]<=j) {
-                    int ans1 = val[i-1] + dp[i-1][j-wt[i-1]];
+                    // int ans1 = val[i-1] + dp[i-1][j-wt[i-1]];
                     int ans2 = dp[i-1][j];
                     int ans3 = val[i-1] + dp[i][j-wt[i-1]];
-                    dp[i][j] = Math.max(ans3, Math.max(ans1, ans2));
+                    dp[i][j] = Math.max(ans3, ans2);
                 }
                 else {
                     dp[i][j] = dp[i-1][j];
@@ -170,7 +170,43 @@ public class DP {
             }
         }
 
+        for(int i=0; i<dp.length; i++) {
+            for(int j=0; j<dp[0].length; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
         return dp[n][W];
+    }
+
+    public static int coinChange(int coins[], int sum) {
+        int n = coins.length;
+        int dp[][] = new int[n+1][sum+1];
+
+        for(int i=0; i<dp.length; i++) {
+            dp[i][0] = 1;
+        }
+
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                if(coins[i-1] <= j) {
+                    dp[i][j] = dp[i][j-coins[i-1]] + dp[i-1][j];
+                }
+                else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        for(int i=0; i<dp.length; i++) {
+            for(int j=0; j<dp[0].length; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        return dp[n][sum];
     }
 
     public static void main(String[] args) {
@@ -188,9 +224,9 @@ public class DP {
         // System.out.println(climbingStairs1(n, ways));
         // System.out.println(climbingStairsTab(n));
 
-        int val[] = {15,14,10,45,30};
-        int wt[] = {2,5,1,3,4};
-        int W = 7;
+        // int val[] = {15,14,10,45,30};
+        // int wt[] = {2,5,1,3,4};
+        // int W = 7;
         // System.out.println(knapsack1(val, wt, W, 0, 0, 0));
 
         // int dp[][] = new int[val.length+1][W+1];
@@ -207,6 +243,12 @@ public class DP {
         // int target = 10;
         // System.out.println(subsetSum(nums, target));
 
-        System.out.println(unboundedKnapsack(val, wt, W));
+        // System.out.println(unboundedKnapsack(val, wt, W));
+
+        // int coins[] = {1,2,3};
+        // int sum = 4;
+        int coins[] = {2,5,3,6};
+        int sum = 10;
+        System.out.println(coinChange(coins, sum));
     }
 }
