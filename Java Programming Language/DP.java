@@ -209,6 +209,30 @@ public class DP {
         return dp[n][sum];
     }
 
+    public static int rodCutting(int length[], int price[], int rodLength) {
+        int dp[][] = new int[price.length+1][rodLength+1];
+        
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                if(length[i-1]<=j) {
+                    dp[i][j] = Math.max(price[i-1]+dp[i][j-length[i-1]], dp[i-1][j]);
+                }
+                else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        for(int i=0; i<dp.length; i++) {
+            for(int j=0; j<dp[0].length; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        return dp[price.length][rodLength];
+    }
+
     public static void main(String[] args) {
         // int n=5;
         // int dp[] = new int[n+1];
@@ -247,8 +271,15 @@ public class DP {
 
         // int coins[] = {1,2,3};
         // int sum = 4;
-        int coins[] = {2,5,3,6};
-        int sum = 10;
-        System.out.println(coinChange(coins, sum));
+        // int coins[] = {2,5,3,6};
+        // int sum = 10;
+        // System.out.println(coinChange(coins, sum));
+
+        // int length[] = {1,2,3,4,5,6,7,8};
+        // int price[] = {1,5,8,9,10,17,17,20};
+        int length[] = {1,3,5};
+        int price[] = {1,8,10};
+        int rodLength = 8;
+        System.out.println(rodCutting(length, price, rodLength));
     }
 }
