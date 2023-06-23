@@ -233,6 +233,11 @@ public class DP {
         return dp[price.length][rodLength];
     }
 
+
+    public static int longestCommSubseq(String str1, String str2, String subseq) {
+        
+    }
+
     public static void main(String[] args) {
         // int n=5;
         // int dp[] = new int[n+1];
