@@ -234,9 +234,56 @@ public class DP {
     }
 
 
-    public static int longestCommSubseq(String str1, String str2, String subseq) {
-        
+    public static int longestCommSubseq(String str1, String str2, StringBuilder subseq, int curr1, int curr2, int maxLength) {  
+        for(int i=curr1; i<str1.length(); i++) {
+            char ch = str1.charAt(i);
+            for(int j=curr2; j<str2.length(); j++) {
+                if(ch==str2.charAt(j)) {
+                    subseq.append(ch);
+                    maxLength = Math.max(maxLength, longestCommSubseq(str1, str2, subseq, i+1, j+1, maxLength));
+                    subseq.delete(subseq.length()-1, subseq.length());
+                }
+            }
+        }
+        System.out.println(subseq);
+        return Math.max(maxLength, subseq.length());
     }
+
+    public static int lcs(String str1, String str2, int n, int m) {
+        if(n==0 || m==0) {
+            return 0;
+        }
+
+        if(str1.charAt(n-1)==str2.charAt(m-1)) {
+            return lcs(str1, str2, n-1, m-1) + 1;
+        }
+        else {
+            int ans1 = lcs(str1, str2, n-1, m);
+            int ans2 = lcs(str1, str2, n, m-1);
+            return Math.max(ans1, ans2);
+        }
+    }
+
+    // LCS - Memoization
+    public static int lcsMemo(String str1, String str2, int n, int m, int dp[][]) {
+        if(n==0 || m==0) {
+            return 0;
+        }
+
+        if(dp[n][m] != -1) {
+            return dp[n][m];
+        }
+
+        if(str1.charAt(n-1) == str2.charAt(m-1)) {
+            dp[n][m] = lcsMemo(str1, str2, n-1, m-1, dp) + 1;
+        }
+        else {
+            int ans1 = lcsMemo(str1, str2, n-1, m, dp);
+            int ans2 = lcsMemo(str1, str2, n, m-1, dp);
+            dp[n][m] = Math.max(ans1, ans2);
+        }
+        return dp[n][m];
+    } 
 
     public static void main(String[] args) {
         // int n=5;
@@ -282,9 +329,24 @@ public class DP {
 
         // int length[] = {1,2,3,4,5,6,7,8};
         // int price[] = {1,5,8,9,10,17,17,20};
-        int length[] = {1,3,5};
-        int price[] = {1,8,10};
-        int rodLength = 8;
-        System.out.println(rodCutting(length, price, rodLength));
+        // int length[] = {1,3,5};
+        // int price[] = {1,8,10};
+        // int rodLength = 8;
+        // System.out.println(rodCutting(length, price, rodLength));
+
+        String str1 = "abcde";
+        String str2 = "ace";
+        // String str1 = "abcdge";
+        // String str2 = "abedg";
+        // System.out.println(longestCommSubseq(str1, str2, new StringBuilder(), 0, 0, 0));
+        // System.out.println(lcs(str1, str2, str1.length(), str2.length()));
+
+        int dp[][] = new int[str1.length()+1][str2.length()+1];
+        for(int i=0; i<dp.length; i++) {
+            for(int j=0; j<dp[0].length; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        System.out.println(lcsMemo(str1, str2, str1.length(), str2.length(), dp));
     }
 }
