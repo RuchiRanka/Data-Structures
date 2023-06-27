@@ -312,6 +312,18 @@ public class DP {
         return dp[n][m];
     }
 
+    public static int longestCommSubstring(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        int dp[][] = new int[n+1][m+1];
+
+        for(int i=1; i<dp.length; i++) {
+            for(int j=1; j<dp[0].length; j++) {
+                if(sdf)
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // int n=5;
         // int dp[] = new int[n+1];
